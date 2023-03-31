@@ -20,8 +20,6 @@ In FlyType, users will be presented with a start screen to start the game. The g
 |Interaction |accepts character input from the user|multi character input, character holds|
 |Scoring    |checks whether the user enters the character as it crosses the target, displaying and updating the score in realtime |"streaks" as a scoring accelerator. Scores saved to a username locally with cookies.|SMS login added with ability to save scores to back end database|
 |Mechanics    |Speed increases over time to increase level of difficulty |Number of characters increases over time to increase difficulty|flow patterns (see Animation above) change to increase difficulty|
-|
-|OtherAspects|||||
 |Display|non dynamic (fixed width)||adjustable width|
 |Support|desktop browser||mobile web support|
 |Polish|written instructions in body of html|instructions built into game with an animation showing how to play|
