@@ -16,7 +16,7 @@ In FlyType, users will be presented with a start screen to start the game. The g
 
 |Functionality| Phase 0         |Phase 1|Bonus| 
 | ----------- | ----------- |----------- |----------- |
-|Animation| single characters fly through a horizontal target bar in the middle of the screen |multiple characters at a time with hard presses (holding a character|characters flow in with complex pattern (i.e. circle around the target box or sine-like wave through the box|
+|Animation| single characters fly through a horizontal target bar in the middle of the screen |multiple characters at a time with hard presses (holding a character)|characters flow in with complex pattern (i.e. circle, sine wave) through the target box|
 |Interaction |accepts character input from the user|multi character input, character holds|
 |Scoring    |checks whether the user enters the character as it crosses the target, displaying and updating the score in realtime |"streaks" as a scoring accelerator. Scores saved to a username locally with cookies.|SMS login added with ability to save scores to back end database|
 |Mechanics    |Speed increases over time to increase level of difficulty |Number of characters increases over time to increase difficulty|flow patterns (see Animation above) change to increase difficulty|
@@ -28,14 +28,19 @@ In FlyType, users will be presented with a start screen to start the game. The g
 
 
 ## Wireframes
-![](/assets/1-Homepage.png)![](/assets/2-GamePlay.png)![](/assets/3-Game-Over.png)
+### Home Screen
+![](/assets/1-Homepage.png)
+### Play Screen
+![](/assets/2-GamePlay.png)
+### Game Over Screen
+![](/assets/3-Game-Over.png)
 
 ## Technologies
 - Graphics: [canvas](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/canvas)
 - Keymapping: [keymaster](https://github.com/madrobby/keymaster)
 
 ## Implementation Timeline
-- Friday: pre-planning day focused on thinking through the entirety of the game in detail to ensure efficient use of the remaining time
+- Friday: pre-planning day focused on thinking through the entirety of the game to ensure efficient use of the remaining time
     - final proposal approval
     - research game design based on prior games (Asteroids, Chess, etc)
     - UML charts completed and reviewed with instructor
@@ -56,6 +61,5 @@ In FlyType, users will be presented with a start screen to start the game. The g
 
 ## Open Questions
 - How much early thought do I need to put into the style of the characters? My sense is that will be easy to swap them out later?
-- What's the best way to have the characters fly around the page in more complex patterns (i.e. a [circle](https://acelisweaven.github.io/arrow-hero/#:~:text=Arrow%20hero%20is%20a%20minimalist,This%20game%20is%20mobile%20friendly.))
-- 
-- What would be the best way to send an email for purposes of one time password login via email?
+- What's the best way to have the characters fly around the page in more complex patterns (i.e. a [circle](https://acelisweaven.github.io/arrow-hero/#:~:text=Arrow%20hero%20is%20a%20minimalist,This%20game%20is%20mobile%20friendly.))?
+- What's the best way to send an email for purposes of one time password login via email?
