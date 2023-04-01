@@ -3,9 +3,20 @@ div, header, footer {
 }
 
 header, footer {
-    width: 100%;
+    width: 100vp;
     height: 40px;
 }
+
+header {
+    margin-bottom: 10px;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+  }
 
 .game-assets {
     display: flex;
@@ -29,18 +40,3 @@ header, footer {
 .game-panel {
     width: 500px;
 }
-
-
-
-header {
-    margin-bottom: 10px;
-}
-
-footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 40px;
-  }
-
-

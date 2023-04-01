@@ -1,1 +1,1 @@
-
+document.getElementById("game-canvas");
