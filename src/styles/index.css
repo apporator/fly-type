@@ -1,21 +1,21 @@
-div {
+div, header, footer {
     border: 1px black solid;
 }
 
-.top-banner, .bottom-banner  {
+header, footer {
     height: 40px;
     width: 100%;
 }
 
-.top-banner {
+header {
     margin-bottom: 10px;
 }
 
-.bottom-banner {
-    position: fixed;
+footer {
+    position: absolute;
     bottom: 0;
-    margin-bottom: 10px;
-}
+    left: 0;
+  }
 
 .game-assets {
     display: flex;
