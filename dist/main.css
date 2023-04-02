@@ -48,23 +48,24 @@ table {
 	border-spacing: 0;
 } */
 
-div, header, footer {
+div {
     border: 1px black solid;
 }
 
-header, footer {
+.top-banner, .bottom-banner  {
     height: 40px;
     width: 100%;
 }
 
-header {
+.top-banner {
     margin-bottom: 10px;
 }
 
-footer {
+.bottom-banner {
     position: fixed;
     bottom: 0;
-  }
+    margin-bottom: 10px;
+}
 
 .game-assets {
     display: flex;
