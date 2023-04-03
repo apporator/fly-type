@@ -11,7 +11,7 @@ export default class Game {
         this.width = canvasInterface.canvas.width;
         this.height = canvasInterface.canvas.height;
         this.characters = [];
-        // this.score = 0;
+        this.score = 0;
 
         //initialize the target bar that the letters will cross and give it starting positions
         this.targetBar = new MovingRectangle({
@@ -65,6 +65,7 @@ export default class Game {
         this.characters.forEach((char) =>{
             char.draw(this.canvasInterface);
         });
+        this.drawScore();
     }
 
     reset() {
@@ -73,6 +74,12 @@ export default class Game {
         this.canvasInterface.fillRect(0, 0, this.width, this.height);
 
         this.targetBar.draw(this.canvasInterface);
+    }
+
+    drawScore() {
+        this.canvasInterface.fillStyle = "black";
+        this.canvasInterface.font = '14px Arial';
+        this.canvasInterface.fillText(`Score: ${this.score}`, 0.01*this.width,0.99*this.height);
     }
 
     start() {
@@ -111,20 +118,20 @@ export default class Game {
 
     checkEntry(inputChar) {
         const matchingChars = this.characters.filter((char) => {
-            return (char.character === inputChar && char.typeable)
+            if(char.character === inputChar && char.typeable) {
+                this.score = this.score + 10;
+                return true;
+            }
         })
         if (matchingChars.length > 0) {
-            console.log("hit!");
             matchingChars.forEach((hitChar) => {
                 const delIdx = this.characters.indexOf(hitChar);
                 this.characters.splice(delIdx,1);
             });
         } else {
-            console.log("miss!");
+            // console.log("miss!");
             return false;
         }
-
-        debugger;
     }
 }
         
