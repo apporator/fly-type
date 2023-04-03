@@ -3,7 +3,8 @@ import MovingRectangle from "./movingRectangle";
 
 export default class Game {
    
-    static DICTIONARY = ["H","J","K","L"];
+    // static DICTIONARY = ["h","j","k","l"];
+    static DICTIONARY = ["h"];
 
     constructor(canvasInterface) {
         this.canvasInterface = canvasInterface;
@@ -35,6 +36,9 @@ export default class Game {
     addChar() {
 
         let adder = this.width/5 //for now, we are only having characters fly from 4 vertical lanes
+        // console.log(Game.DICTIONARY.length, "len");
+        // debugger;
+        const randomIndex = Math.floor(Math.random() * Game.DICTIONARY.length);
 
         if(this.charX === undefined || ((this.charX + adder) >= this.width)) {
             this.charX = adder;
@@ -50,7 +54,7 @@ export default class Game {
             yCoordinate: 0,
             xVelocity: 0, 
             yVelocity: vel, 
-            character: "A",
+            character: Game.DICTIONARY[randomIndex],
             canvasInterface: this.canvasInterface
         })
         this.characters.push(newChar);
