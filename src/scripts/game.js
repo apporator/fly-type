@@ -32,10 +32,12 @@ export default class Game {
 
     addChar() {
 
-        if(this.charX === undefined) {
-            this.charX = 115;
+        let adder = this.width/5 //for now, we are only having characters fly from 4 vertical lanes
+
+        if(this.charX === undefined || ((this.charX + adder) >= this.width)) {
+            this.charX = adder;
         } else {
-            this.charX = 115 + ((this.charX) % 460);
+            this.charX = this.charX + adder
         }
         console.log(this.charX);
 
