@@ -13,10 +13,10 @@ export default class View {
 
     bindKeys() {
         // key('left', () => this.game.ship.power([-1, 0]));
-        key('k', () => console.log("k key pressed"));
-        key('h', () => console.log("h key pressed"));
-        key('j', () => console.log("j key pressed"));
-        key('l', () => console.log("l key pressed"));
+        key('h', () => this.game.checkEntry('h'));
+        key('j', () => this.game.checkEntry('j'));
+        key('k', () => this.game.checkEntry('k'));
+        key('l', () => this.game.checkEntry('l'));
         key('space', () => this.gameToggle());
         key('right', () => {
             this.game.step();

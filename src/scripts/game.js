@@ -3,15 +3,15 @@ import MovingRectangle from "./movingRectangle";
 
 export default class Game {
    
-    // static DICTIONARY = ["h","j","k","l"];
-    static DICTIONARY = ["h"];
+    static DICTIONARY = ["h","j","k","l"];
+    // static DICTIONARY = ["h"]; // limited test chars
 
     constructor(canvasInterface) {
         this.canvasInterface = canvasInterface;
         this.width = canvasInterface.canvas.width;
         this.height = canvasInterface.canvas.height;
-        this.charXpos = [0.23, 0.46, 0.69, 0.92]; //defines the quartiles from which the characters will be generated
         this.characters = [];
+        // this.score = 0;
 
         //initialize the target bar that the letters will cross and give it starting positions
         this.targetBar = new MovingRectangle({
@@ -24,20 +24,12 @@ export default class Game {
             height: 30,
             canvasInterface: this.canvasInterface
         })
-        // debugger;
-        // console.log("here");
-        //set the background for starters
-        // console.log(this.width, this.height);
-        // debugger;
-        // this.addChar();
-
     }
 
     addChar() {
 
         let adder = this.width/5 //for now, we are only having characters fly from 4 vertical lanes
-        // console.log(Game.DICTIONARY.length, "len");
-        // debugger;
+
         const randomIndex = Math.floor(Math.random() * Game.DICTIONARY.length);
 
         if(this.charX === undefined || ((this.charX + adder) >= this.width)) {
@@ -45,9 +37,8 @@ export default class Game {
         } else {
             this.charX = this.charX + adder
         }
-        // console.log(this.charX);
 
-        const vel = 3;
+        const vel = 2;
         
         const newChar = new MovingCharacter({
             xCoordinate: this.charX,
@@ -55,7 +46,8 @@ export default class Game {
             xVelocity: 0, 
             yVelocity: vel, 
             character: Game.DICTIONARY[randomIndex],
-            canvasInterface: this.canvasInterface
+            canvasInterface: this.canvasInterface,
+            typeable: false
         })
         this.characters.push(newChar);
         
@@ -109,10 +101,30 @@ export default class Game {
 
     colorChar(char) {
         if (char.yCoordinate >= this.targetBar.yCoordinate && char.yCoordinate <= (this.targetBar.yCoordinate + this.targetBar.height + char.height)) {
+            char.typeable = true;
             char.color = "red";
         } else {
+            char.typeable = false;
             char.color = "black";
         }
+    }
+
+    checkEntry(inputChar) {
+        const matchingChars = this.characters.filter((char) => {
+            return (char.character === inputChar && char.typeable)
+        })
+        if (matchingChars.length > 0) {
+            console.log("hit!");
+            matchingChars.forEach((hitChar) => {
+                const delIdx = this.characters.indexOf(hitChar);
+                this.characters.splice(delIdx,1);
+            });
+        } else {
+            console.log("miss!");
+            return false;
+        }
+
+        debugger;
     }
 }
         

@@ -8,7 +8,8 @@ export default class MovingCharacter extends MovingRectangle {
         super(argsHash);
         this.character = argsHash.character;
         this.color = (argsHash.color || "black");
-        this.canvasInterface = argsHash.canvasInterface
+        this.canvasInterface = argsHash.canvasInterface;
+        this.typeable = argsHash.typeable;
     }
 
     draw(canvasInterface) {
@@ -22,7 +23,7 @@ export default class MovingCharacter extends MovingRectangle {
         this.canvasInterface.font = MovingCharacter.FONT;
         const fontMath = this.canvasInterface.measureText(this.character);
         const h = fontMath.actualBoundingBoxAscent + fontMath.actualBoundingBoxDescent
-        console.log("new height");
+        
         return h;
     }
 
