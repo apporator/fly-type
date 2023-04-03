@@ -8,6 +8,7 @@ export default class View {
         this.canvasInterface = canvasInterface;
         this.game = new Game(canvasInterface);
         this.bindKeys();
+        this.gameRunning = false;
     }
 
     bindKeys() {
@@ -16,24 +17,25 @@ export default class View {
         key('h', () => console.log("h key pressed"));
         key('j', () => console.log("j key pressed"));
         key('l', () => console.log("l key pressed"));
-        key('space', () => {
-            clearInterval(this.gameInterval);
-            clearInterval(this.charInterval);
-        });
+        key('space', () => this.gameToggle());
     }
 
-    start() {
-        
-        // this.game.addChar();
-        this.gameInterval = setInterval(() => {
-            this.game.step();
-            this.game.animate();
-        }, 17);
+    startGame() {
+        this.gameRunning = true;
+        this.game.start();
+    }
 
-        this.charInterval = setInterval(() => {
-            console.log("char added");
-            this.game.addChar();
-        }, 500);
+    gameToggle(){
+        if (this.gameRunning) {
+            this.pauseGame();
+        } else {
+            this.startGame();
+        }
+    }
+
+    pauseGame(){
+        this.gameRunning = false;
+        this.game.pause()
     }
 }
 

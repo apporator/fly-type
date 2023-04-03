@@ -39,7 +39,7 @@ export default class Game {
         } else {
             this.charX = this.charX + adder
         }
-        console.log(this.charX);
+        // console.log(this.charX);
 
         const vel = 3;
         
@@ -73,6 +73,30 @@ export default class Game {
         this.canvasInterface.fillRect(0, 0, this.width, this.height);
 
         this.targetBar.draw(this.canvasInterface);
+    }
+
+    start() {
+        this.gameInterval = setInterval(() => {
+            this.step();
+            this.animate();
+        }, 17);
+        
+        this.charInterval = setInterval(() => {
+            // console.log("char added");
+            this.addChar();
+        }, 500);
+    }
+
+    pause() {
+        if(this.gameInterval) {
+            clearInterval(this.gameInterval)
+        };
+
+        if(this.charInterval) {
+            clearInterval(this.charInterval)
+        };
+
+        debugger;
     }
 }
         
