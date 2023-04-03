@@ -18,6 +18,10 @@ export default class View {
         key('j', () => console.log("j key pressed"));
         key('l', () => console.log("l key pressed"));
         key('space', () => this.gameToggle());
+        key('right', () => {
+            this.game.step();
+            this.game.animate();
+        });
     }
 
     startGame() {

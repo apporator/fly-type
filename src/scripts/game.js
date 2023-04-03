@@ -20,9 +20,11 @@ export default class Game {
             yVelocity: 0, 
             color: "lightgrey",
             width: this.width,
-            height: 30
+            height: 30,
+            canvasInterface: this.canvasInterface
         })
         // debugger;
+        // console.log("here");
         //set the background for starters
         // console.log(this.width, this.height);
         // debugger;
@@ -48,7 +50,8 @@ export default class Game {
             yCoordinate: 0,
             xVelocity: 0, 
             yVelocity: vel, 
-            character: "A"
+            character: "A",
+            canvasInterface: this.canvasInterface
         })
         this.characters.push(newChar);
         
@@ -57,6 +60,7 @@ export default class Game {
     step() {
         this.characters.forEach((char) =>{
             char.move();
+            this.colorChar(char);
         });
     }
 
@@ -96,7 +100,15 @@ export default class Game {
             clearInterval(this.charInterval)
         };
 
-        debugger;
+        // debugger;
+    }
+
+    colorChar(char) {
+        if (char.yCoordinate >= this.targetBar.yCoordinate && char.yCoordinate <= (this.targetBar.yCoordinate + this.targetBar.height + char.height)) {
+            char.color = "red";
+        } else {
+            char.color = "black";
+        }
     }
 }
         

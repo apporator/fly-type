@@ -7,7 +7,8 @@ export default class MovingCharacter extends MovingRectangle {
     constructor(argsHash) {
         super(argsHash);
         this.character = argsHash.character;
-        this.color = (argsHash.color || "blue");
+        this.color = (argsHash.color || "black");
+        this.canvasInterface = argsHash.canvasInterface
     }
 
     draw(canvasInterface) {
@@ -15,5 +16,17 @@ export default class MovingCharacter extends MovingRectangle {
         canvasInterface.fillStyle = this.color;
         canvasInterface.font = MovingCharacter.FONT;
         canvasInterface.fillText(this.character, this.xCoordinate, this.yCoordinate);
+    }
+
+    get height(){
+        this.canvasInterface.font = MovingCharacter.FONT;
+        const fontMath = this.canvasInterface.measureText(this.character);
+        const h = fontMath.actualBoundingBoxAscent + fontMath.actualBoundingBoxDescent
+        console.log("new height");
+        return h;
+    }
+
+    set height(value){
+        //setting height does nothing. Can only be set by changing the character
     }
 }

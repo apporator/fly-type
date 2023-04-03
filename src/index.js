@@ -19,4 +19,5 @@ const canvasInterface = canvas.getContext('2d');
 
 
 const view = new View(canvasInterface);
+window.view = view;
 view.startGame();
