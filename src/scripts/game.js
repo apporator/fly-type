@@ -3,8 +3,8 @@ import MovingRectangle from "./movingRectangle";
 
 export default class Game {
    
-    static DICTIONARY = ["h","j","k","l"];
-    // static DICTIONARY = ["h"]; // limited test chars
+    // static DICTIONARY = ["h","j","k","l"];
+    static DICTIONARY = ["h"]; // limited test chars
 
     constructor(canvasInterface) {
         this.canvasInterface = canvasInterface;
@@ -54,10 +54,28 @@ export default class Game {
     }
 
     step() {
-        this.characters.forEach((char) =>{
+        
+        for (let i = this.characters.length - 1; i >=0; i--) {
+            const char = this.characters[i];
             char.move();
-            this.colorChar(char);
-        });
+
+            if (this.charOffCanvas(char)) {
+                // debugger;
+                console.log("char deleted");
+                this.characters.splice(i,1);
+            } else {
+                this.colorChar(char);
+            }
+        }
+        console.log(this.characters.length, "num of chars");
+    }
+
+    charOffCanvas(char) {
+        if (char.yCoordinate > (this.height + char.height)) {
+            return true
+        } else {
+            return false;
+        }
     }
 
     animate(){
@@ -116,6 +134,7 @@ export default class Game {
         }
     }
 
+    
     checkEntry(inputChar) {
         const matchingChars = this.characters.filter((char) => {
             if(char.character === inputChar && char.typeable) {
