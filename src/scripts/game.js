@@ -12,6 +12,7 @@ export default class Game {
         this.height = canvasInterface.canvas.height;
         this.characters = [];
         this.score = 0;
+        this.lives = 5;
 
         //initialize the target bar that the letters will cross and give it starting positions
         this.targetBar = new MovingRectangle({
@@ -61,17 +62,23 @@ export default class Game {
 
             if (this.charOffCanvas(char)) {
                 // debugger;
-                console.log("char deleted");
+                // console.log("char deleted");
                 this.characters.splice(i,1);
             } else {
                 this.colorChar(char);
             }
         }
-        console.log(this.characters.length, "num of chars");
+        
+        //end game if score is <=0
+        if (this.score <= 0) {
+            
+        }
+        // console.log(this.characters.length, "num of chars");
     }
 
     charOffCanvas(char) {
         if (char.yCoordinate > (this.height + char.height)) {
+            this.lives --;
             return true
         } else {
             return false;
@@ -83,7 +90,7 @@ export default class Game {
         this.characters.forEach((char) =>{
             char.draw(this.canvasInterface);
         });
-        this.drawScore();
+        this.drawCounters();
     }
 
     reset() {
@@ -94,10 +101,22 @@ export default class Game {
         this.targetBar.draw(this.canvasInterface);
     }
 
-    drawScore() {
+    drawCounters() {
+        
         this.canvasInterface.fillStyle = "black";
         this.canvasInterface.font = '14px Arial';
-        this.canvasInterface.fillText(`Score: ${this.score}`, 0.01*this.width,0.99*this.height);
+        
+        //draw score
+        const scoreX =  0.01*this.width;
+        const scoreY =  0.99*this.height;
+
+        this.canvasInterface.fillText(`Score: ${this.score}`,scoreX,scoreY);
+
+        //draw lives
+        const livesX =  0.89*this.width;
+        const livesY =  0.99*this.height;
+        
+        this.canvasInterface.fillText(`Lives: ${this.lives}`,livesX,livesY);
     }
 
     start() {
@@ -139,6 +158,7 @@ export default class Game {
         const matchingChars = this.characters.filter((char) => {
             if(char.character === inputChar && char.typeable) {
                 this.score = this.score + 10;
+                this.lives = Math.min(this.lives + 1, 5);
                 return true;
             }
         })
