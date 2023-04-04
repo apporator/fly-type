@@ -13,6 +13,7 @@ export default class Game {
         this.characters = [];
         this.score = 0;
         this.lives = 5;
+        this.gameOver = false;
 
         //initialize the target bar that the letters will cross and give it starting positions
         this.targetBar = new MovingRectangle({
@@ -70,8 +71,13 @@ export default class Game {
         }
         
         //end game if score is <=0
-        if (this.score <= 0) {
-            
+        if (this.lives <= 0) {
+            this.pause();
+            // this.characters = [];
+            // this.reset();
+            this.gameOver = true;
+            console.log("game over");
+            // debugger;
         }
         // console.log(this.characters.length, "num of chars");
     }
@@ -86,19 +92,12 @@ export default class Game {
     }
 
     animate(){
-        this.reset();
+        this.drawBackdrop("beige");
+        this.targetBar.draw(this.canvasInterface);
         this.characters.forEach((char) =>{
             char.draw(this.canvasInterface);
         });
         this.drawCounters();
-    }
-
-    reset() {
-        // debugger;
-        this.canvasInterface.fillStyle = "beige";
-        this.canvasInterface.fillRect(0, 0, this.width, this.height);
-
-        this.targetBar.draw(this.canvasInterface);
     }
 
     drawCounters() {
@@ -120,9 +119,13 @@ export default class Game {
     }
 
     start() {
+        this.gameOver = false;
+        
         this.gameInterval = setInterval(() => {
             this.step();
-            this.animate();
+            
+            if (!this.gameOver) this.animate();
+        
         }, 17);
         
         this.charInterval = setInterval(() => {
@@ -132,15 +135,8 @@ export default class Game {
     }
 
     pause() {
-        if(this.gameInterval) {
-            clearInterval(this.gameInterval)
-        };
-
-        if(this.charInterval) {
-            clearInterval(this.charInterval)
-        };
-
-        // debugger;
+        clearInterval(this.gameInterval);
+        clearInterval(this.charInterval);
     }
 
     colorChar(char) {
@@ -171,6 +167,29 @@ export default class Game {
             // console.log("miss!");
             return false;
         }
+    }
+
+    drawBackdrop (color) {
+        this.canvasInterface.fillStyle = color;
+        this.canvasInterface.fillRect(0, 0, this.width, this.height);
+    }
+
+    replayScreen() {
+        console.log("replay screen")
+        this.drawBackdrop("grey");
+        this.characters = [];
+        this.score = 0;
+        this.lives = 5;
+        this.charX = null;
+
+        this.canvasInterface.fillStyle = "black";
+        this.canvasInterface.font = '26px Arial';
+        
+        //draw score
+        const msgX =  0.20*this.width;
+        const msgY =  0.50*this.height;
+
+        this.canvasInterface.fillText(`Select return to play again!`,msgX,msgY);
     }
 }
         
