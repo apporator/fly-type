@@ -1,3 +1,6 @@
+/*!****************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/styles/reset.css ***!
+  \****************************************************************************************************/
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -48,12 +51,11 @@ table {
 	border-spacing: 0;
 } */
 
+/*!****************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/styles/index.css ***!
+  \****************************************************************************************************/
 div, header, footer {
     border: 1px black solid;
-}
-
-.side-panel {
-    box-sizing: border-box;
 }
 
 header, footer {
@@ -74,20 +76,35 @@ footer {
 .game-assets {
     display: flex;
     justify-content: space-around;
+    flex-direction: column;
     width: 1000px;
-    height: 550px;
     margin-left: auto;
     margin-right: auto;
 }
 
-.game-assets div {
-    height: 500px;
-    margin-top: auto;
-    margin-bottom: auto;
+#sentence {
+    background-color: rgba(255, 255, 255, 0.95);
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: 20px;
 }
 
-.side-panel {
-    width: 200px;
+.game-panels {
+    display: flex;
+    justify-content: space-around;
+    width: 1000px;
+    height: 550px;
+    margin-left: auto;
+    margin-right: auto;
+    /* border: none; */
+}
+
+.game-panels div {
+    height: 500px;
+    /* margin-top: auto; */
+    margin-bottom: auto;
 }
 
 .game-panel {
@@ -96,7 +113,19 @@ footer {
 
 .side-panel {
     padding: 20px;
+    background-color: rgba(255, 255, 255, 0.95);
+    box-sizing: border-box;
+    width: 200px;
 }
 
+#inner-contents {
+    background-image: url("../assets/letterBanner.jpg");
+    z-index: -5;
+    width: 100%;
+    position: absolute;
+}
 
-/*# sourceMappingURL=main.css.map*/
+/*!*************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/sass-loader/dist/cjs.js!./src/index.scss ***!
+  \*************************************************************************************************************************************/
+

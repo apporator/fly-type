@@ -36,7 +36,7 @@ export default class View {
         this.game.start();
 
         this.gameCheckInterval = setInterval(() => {
-            console.log("game checked");
+            // console.log("game checked");
             this.checkGame();
         }, 17);
 
@@ -78,9 +78,11 @@ export default class View {
 
     updateHTMLScore(){
         const displayScore = this.cookieScore();
+        const scoreBoard = document.getElementById("scores");
         if (displayScore) {
-            const scoreBoard = document.getElementById("scores");
             scoreBoard.innerHTML = `High Score: ${displayScore}`;
+        } else {
+            scoreBoard.innerHTML = `No high score...yet`;
         }
     }
 

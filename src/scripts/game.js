@@ -1,10 +1,16 @@
 import MovingCharacter from "./movingCharacter";
 import MovingRectangle from "./movingRectangle";
+import { genSentence, selectRand } from "./util";
 
 export default class Game {
    
     // static DICTIONARY = ["h","j","k","l"];
     static DICTIONARY = ["h"]; // limited test chars
+    
+    static ADJECTIVES = ['furry', 'happy', 'gloomy', 'friendly'];
+    static NOUNS = ['dog', 'cat', 'tree', 'mountain'];
+    static VERBS = ['ran', 'jumped', 'slept', 'ate'];
+    static ADVERBS = ['quickly', 'slowly', 'loudly', 'quietly'];
 
     constructor(canvasInterface) {
         this.canvasInterface = canvasInterface;
@@ -32,8 +38,6 @@ export default class Game {
 
         let adder = this.width/5 //for now, we are only having characters fly from 4 vertical lanes
 
-        const randomIndex = Math.floor(Math.random() * Game.DICTIONARY.length);
-
         if(this.charX === undefined || ((this.charX + adder) >= this.width)) {
             this.charX = adder;
         } else {
@@ -47,7 +51,7 @@ export default class Game {
             yCoordinate: 0,
             xVelocity: 0, 
             yVelocity: vel, 
-            character: Game.DICTIONARY[randomIndex],
+            character: selectRand(Game.DICTIONARY),
             canvasInterface: this.canvasInterface,
             typeable: false
         })
@@ -76,7 +80,7 @@ export default class Game {
             // this.characters = [];
             // this.reset();
             this.gameOver = true;
-            console.log("game over");
+            // console.log("game over");
             // debugger;
         }
         // console.log(this.characters.length, "num of chars");
@@ -175,7 +179,7 @@ export default class Game {
     }
 
     replayScreen() {
-        console.log("replay screen")
+        // console.log("replay screen")
         this.drawBackdrop("grey");
         this.characters = [];
         this.score = 0;
@@ -191,5 +195,7 @@ export default class Game {
 
         this.canvasInterface.fillText(`Select return to play again!`,msgX,msgY);
     }
+
+    
 }
         

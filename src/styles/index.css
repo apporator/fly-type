@@ -2,10 +2,6 @@ div, header, footer {
     border: 1px black solid;
 }
 
-.side-panel {
-    box-sizing: border-box;
-}
-
 header, footer {
     height: 40px;
     width: 100%;
@@ -24,20 +20,35 @@ footer {
 .game-assets {
     display: flex;
     justify-content: space-around;
+    flex-direction: column;
     width: 1000px;
-    height: 550px;
     margin-left: auto;
     margin-right: auto;
 }
 
-.game-assets div {
-    height: 500px;
-    margin-top: auto;
-    margin-bottom: auto;
+#sentence {
+    background-color: rgba(255, 255, 255, 0.95);
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: 20px;
 }
 
-.side-panel {
-    width: 200px;
+.game-panels {
+    display: flex;
+    justify-content: space-around;
+    width: 1000px;
+    height: 550px;
+    margin-left: auto;
+    margin-right: auto;
+    /* border: none; */
+}
+
+.game-panels div {
+    height: 500px;
+    /* margin-top: auto; */
+    margin-bottom: auto;
 }
 
 .game-panel {
@@ -46,4 +57,14 @@ footer {
 
 .side-panel {
     padding: 20px;
+    background-color: rgba(255, 255, 255, 0.95);
+    box-sizing: border-box;
+    width: 200px;
+}
+
+#inner-contents {
+    background-image: url("../assets/letterBanner.jpg");
+    z-index: -5;
+    width: 100%;
+    position: absolute;
 }
