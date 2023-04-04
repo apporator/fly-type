@@ -1,11 +1,11 @@
 import MovingCharacter from "./movingCharacter";
 import MovingRectangle from "./movingRectangle";
-import { genSentence, selectRand } from "./util";
+import { genSentence, selectRand, setBanner } from "./util";
 
 export default class Game {
    
     // static DICTIONARY = ["h","j","k","l"];
-    static DICTIONARY = ["h"]; // limited test chars
+    // static DICTIONARY = ["h"]; // limited test chars
     
     static ADJECTIVES = ['furry', 'happy', 'gloomy', 'friendly'];
     static NOUNS = ['dog', 'cat', 'tree', 'mountain'];
@@ -18,8 +18,18 @@ export default class Game {
         this.height = canvasInterface.canvas.height;
         this.characters = [];
         this.score = 0;
-        this.lives = 5;
+        this.lives = 50;
         this.gameOver = false;
+        this.resetSentence();
+        this.xCharOptions = [
+            this.width*0.20,
+            this.width*0.40,
+            this.width*0.60,
+            this.width*0.80
+        ];
+
+
+        // debugger;
 
         //initialize the target bar that the letters will cross and give it starting positions
         this.targetBar = new MovingRectangle({
@@ -35,28 +45,39 @@ export default class Game {
     }
 
     addChar() {
+            
+        // debugger;
+        if (this.noSpaceTarget.length > 0){
 
-        let adder = this.width/5 //for now, we are only having characters fly from 4 vertical lanes
-
-        if(this.charX === undefined || ((this.charX + adder) >= this.width)) {
-            this.charX = adder;
-        } else {
-            this.charX = this.charX + adder
+            const vel = 1.5;
+            const newChar = new MovingCharacter({
+                xCoordinate: selectRand(this.xCharOptions),
+                yCoordinate: 0,
+                xVelocity: 0, 
+                yVelocity: vel, 
+                character: this.removeChar(),
+                canvasInterface: this.canvasInterface,
+                typeable: false
+            })
+            this.characters.push(newChar);
+        } else if (this.characters.length === 0) {
+            this.resetSentence();
         }
+        // debugger;
+    }
 
-        const vel = 2;
-        
-        const newChar = new MovingCharacter({
-            xCoordinate: this.charX,
-            yCoordinate: 0,
-            xVelocity: 0, 
-            yVelocity: vel, 
-            character: selectRand(Game.DICTIONARY),
-            canvasInterface: this.canvasInterface,
-            typeable: false
-        })
-        this.characters.push(newChar);
-        
+    removeChar() {
+        return this.noSpaceTarget.shift();
+    }
+
+    // sentenceCleared() {
+    //     return (this.noSpaceTarget.length === 0 || this.characters.length === 0)
+    // }
+
+    resetSentence() {
+        this.targetSentence = genSentence();
+        this.noSpaceTarget = Array.from(this.targetSentence.split(" ").join(""));
+        setBanner(this.targetSentence);
     }
 
     step() {
@@ -124,7 +145,6 @@ export default class Game {
 
     start() {
         this.gameOver = false;
-        
         this.gameInterval = setInterval(() => {
             this.step();
             
@@ -155,6 +175,8 @@ export default class Game {
 
     
     checkEntry(inputChar) {
+        debugger;
+        console.log(inputChar, "input char");
         const matchingChars = this.characters.filter((char) => {
             if(char.character === inputChar && char.typeable) {
                 this.score = this.score + 10;
@@ -186,14 +208,16 @@ export default class Game {
         this.lives = 5;
         this.charX = null;
 
-        this.canvasInterface.fillStyle = "black";
-        this.canvasInterface.font = '26px Arial';
+        // this.canvasInterface.fillStyle = "black";
+        // this.canvasInterface.font = '26px Arial';
         
-        //draw score
-        const msgX =  0.20*this.width;
-        const msgY =  0.50*this.height;
+        // //draw score
+        // const msgX =  0.20*this.width;
+        // const msgY =  0.50*this.height;
 
-        this.canvasInterface.fillText(`Select return to play again!`,msgX,msgY);
+        // this.canvasInterface.fillText(`Select return to play again!`,msgX,msgY);
+
+        setBanner("Game over :( select return to play again!")
     }
 
     

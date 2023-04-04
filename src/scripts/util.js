@@ -1,3 +1,4 @@
+import Game from "./game";
 
 export function selectRand(array) {
     if(!array.length) return null;
@@ -8,6 +9,18 @@ export function selectRand(array) {
 }
 
 export function genSentence() {
-    const sentence = `${Game.adjective} ${Game.noun}s ${Game.verb} ${Game.adverb}`;
+    // debugger;
+
+    const adjective = selectRand(Game.ADJECTIVES);
+    const noun = selectRand(Game.NOUNS);
+    const verb = selectRand(Game.VERBS);
+    const adverb = selectRand(Game.ADVERBS);
+
+    const sentence = `${adjective} ${noun}s ${verb} ${adverb}`;
     return sentence;
+}
+
+export function setBanner(msg) {
+    const senDiv = document.getElementById("sentence")
+    senDiv.innerHTML = msg;
 }

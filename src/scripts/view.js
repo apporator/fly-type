@@ -1,8 +1,16 @@
 import Game from "./game";
-import key from 'keymaster';
 
 export default class View {
     
+    static INPUT = [
+        'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
+        'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
+        'q', 'r', 's', 't', 'u', 'v', 'y', 'x',
+        'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F',
+        'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',
+        'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
+        'Y', 'X', 'Y', 'Z'
+      ];
 
     constructor(canvasInterface) {
         this.canvasInterface = canvasInterface;
@@ -10,25 +18,40 @@ export default class View {
         this.bindKeys();
         this.gameRunning = false;
         this.updateHTMLScore();
+        
+        // this.boundKeyHandler = this.handleKey.bind(this);
         // document.cookie = '';
         // debugger;
     }
 
     bindKeys() {
-        // key('left', () => this.game.ship.power([-1, 0]));
-        key('return', () => {
+
+        document.addEventListener('keydown', (event) => {
+            
+            this.handleKey(event);
             // debugger;
-            this.startGame();
         });
-        key('h', () => this.game.checkEntry('h'));
-        key('j', () => this.game.checkEntry('j'));
-        key('k', () => this.game.checkEntry('k'));
-        key('l', () => this.game.checkEntry('l'));
-        key('space', () => this.gameToggle());
-        key('right', () => {
-            this.game.step();
-            this.game.animate();
-        });
+
+    }
+
+    handleKey(event) {
+        const key = event.key;
+        debugger;
+        switch(key) {
+            case ' ':
+                this.gameToggle();
+                break;
+            case 'ArrowRight':
+                this.game.step();
+                this.game.animate();
+                break;
+        }
+
+        if(View.INPUT.indexOf(key) >= 0) {
+            this.game.checkEntry(key);
+        } else {
+            console.log(key, "non processed input");
+        }
     }
 
     startGame() {
