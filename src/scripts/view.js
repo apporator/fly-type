@@ -77,8 +77,11 @@ export default class View {
     }
 
     updateHTMLScore(){
-        const scoreBoard = document.getElementById("scores");
-        scoreBoard.innerHTML = `High Score: ${this.cookieScore()}`
+        const displayScore = this.cookieScore();
+        if (displayScore) {
+            const scoreBoard = document.getElementById("scores");
+            scoreBoard.innerHTML = `High Score: ${displayScore}`;
+        }
     }
 
     gameToggle(){
