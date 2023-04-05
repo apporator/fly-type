@@ -1,18 +1,38 @@
+body {
+    background-image: url("../assets/wrinkledPaper.jpg");
+    background-size: cover;
+    height: 95vh;
+    width: 95vw;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 div, header, footer {
     border: 1px black solid;
+    border-radius: 7px;
 }
 
 header, footer {
-    height: 40px;
+    height: 5%;
     width: 100%;
 }
 
 header {
+    display: flex;
+    justify-content: space-between;
     margin-bottom: 10px;
 }
 
+header span {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+#linked-in {
+    margin-right: 5px;
+}
+
 footer {
-    position: absolute;
     bottom: 0;
     left: 0;
   }
@@ -24,47 +44,75 @@ footer {
     width: 1000px;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 2%;
+}
+
+.game-text {
+    background-color: rgba(255, 255, 255, 0.80);
+}
+
+#score, #lives {
+    width: 20%;
+}
+
+#message {
+    width: 60%;
+    text-align: center;
 }
 
 #sentence {
-    background-color: rgba(255, 255, 255, 0.95);
     width: 500px;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
-    margin-top: 20px;
+    /* margin-top: 20px; */
+    margin-bottom: 1%;
 }
 
 .game-panels {
     display: flex;
     justify-content: space-around;
     width: 1000px;
-    height: 550px;
+    /* height: 550px; */
     margin-left: auto;
     margin-right: auto;
     /* border: none; */
 }
 
 .game-panels div {
-    height: 500px;
+    /* height: 500px; */
     /* margin-top: auto; */
-    margin-bottom: auto;
+    /* margin-bottom: auto; */
 }
 
 .game-panel {
     width: 500px;
+    height: 550px;
 }
 
 .side-panel {
     padding: 20px;
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: rgba(255, 255, 255, 0.60);
     box-sizing: border-box;
     width: 200px;
 }
 
 #inner-contents {
-    background-image: url("../assets/letterBanner.jpg");
-    z-index: -5;
+    /* background-color: beige; */
+    background-image: url("../assets/letterBannerVector.png");
+    background-repeat: no-repeat;
+    background-size: cover;
     width: 100%;
-    position: absolute;
+    height: 90%;
+}
+
+#canvas-div {
+    overflow: hidden;
+    height: 500px;
+}
+
+#game-data {
+    margin-top: 1%;
+    display: flex;
+    justify-content: space-between;
 }

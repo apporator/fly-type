@@ -11,14 +11,26 @@
   </head>
 
   <body>
-    <header></header>
+    <header>
+      <span></span>
+      <span id="title">FlyType</span>
+      <span id="linked-in">LinkedIn</span>
+    </header>
     <div id="inner-contents">
       <div class="game-assets" id="game-assets">
-        <div id="sentence">She sells sea shells by the sea shore</div>
+        
         <div class="game-panels">
           <div id="instructions" class="side-panel vertical-panel"></div>
-          <div id="game-panel vertical-panel">
-            <canvas id="game-canvas"></canvas>
+          <div id="game-panel" class="vertical-panel">
+            <div id="sentence" class="game-text">She sells sea shells by the sea shore</div>
+              <div id="canvas-div">
+                <canvas id="game-canvas"></canvas>
+              </div>
+              <div id="game-data" class="game-text">
+                <div id="score">Score: <span id="game-score">0</span> </div>
+                <div id="message">message</div>
+                <div id="lives">Lives: <span id="game-lives"></span> </div>
+              </div>
           </div>
           <div id="scores" class="side-panel vertical-panel"></div>
       </div>

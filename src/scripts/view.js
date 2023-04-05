@@ -36,18 +36,14 @@ export default class View {
 
     handleKey(event) {
         const key = event.key;
-        debugger;
-        switch(key) {
-            case ' ':
-                this.gameToggle();
-                break;
-            case 'ArrowRight':
-                this.game.step();
-                this.game.animate();
-                break;
-        }
+        // debugger;
 
-        if(View.INPUT.indexOf(key) >= 0) {
+        if (key === ' ') {
+            this.gameToggle();
+        } else if (key === 'ArrowRight') {
+            this.game.step();
+            this.game.animate();
+        } else if (View.INPUT.indexOf(key) >= 0) {
             this.game.checkEntry(key);
         } else {
             console.log(key, "non processed input");

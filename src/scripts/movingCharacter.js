@@ -2,7 +2,7 @@ import MovingRectangle from "./movingRectangle";
 
 export default class MovingCharacter extends MovingRectangle {
 
-    static FONT = '20px Arial';
+    static FONT = '20px Georgia';
 
     constructor(argsHash) {
         super(argsHash);

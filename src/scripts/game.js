@@ -18,9 +18,12 @@ export default class Game {
         this.height = canvasInterface.canvas.height;
         this.characters = [];
         this.score = 0;
-        this.lives = 50;
+        this.lives = 30;
         this.gameOver = false;
         this.resetSentence();
+        this.wordPause = 0;
+        this.charVel = 2
+
         this.xCharOptions = [
             this.width*0.20,
             this.width*0.40,
@@ -28,47 +31,60 @@ export default class Game {
             this.width*0.80
         ];
 
+        this.img = new Image();
+        this.img.src = '../assets/fullLegalPad500.png';
+        // this.img.style.width = '100%';
+        // this.img.style.height = '100%';
+
 
         // debugger;
 
         //initialize the target bar that the letters will cross and give it starting positions
         this.targetBar = new MovingRectangle({
             xCoordinate: 0,
-            yCoordinate: 400,
+            yCoordinate: 411,
             xVelocity: 0, 
             yVelocity: 0, 
             color: "lightgrey",
             width: this.width,
-            height: 30,
+            height: 33,
             canvasInterface: this.canvasInterface
         })
     }
 
     addChar() {
-            
-        // debugger;
-        if (this.noSpaceTarget.length > 0){
 
-            const vel = 1.5;
+        const charToAdd = this.targetArray[0];
+        // debugger;
+        if (charToAdd === " ") {
+            this.wordPause = 2;
+            this.targetArray.shift();
+        }
+        else if (this.targetArray.length > 0 && this.wordPause <= 0){
+            
             const newChar = new MovingCharacter({
                 xCoordinate: selectRand(this.xCharOptions),
                 yCoordinate: 0,
                 xVelocity: 0, 
-                yVelocity: vel, 
-                character: this.removeChar(),
+                yVelocity: this.charVel, 
+                character: this.targetArray.shift(),
                 canvasInterface: this.canvasInterface,
                 typeable: false
             })
             this.characters.push(newChar);
         } else if (this.characters.length === 0) {
             this.resetSentence();
+            this.charVel = this.charVel*1.2;
+        } else {
+            // console.log("decrementing");
+            this.wordPause--;
         }
         // debugger;
     }
 
-    removeChar() {
-        return this.noSpaceTarget.shift();
-    }
+    // removeChar() {
+    //     return this.noSpaceTarget.shift();
+    // }
 
     // sentenceCleared() {
     //     return (this.noSpaceTarget.length === 0 || this.characters.length === 0)
@@ -76,7 +92,8 @@ export default class Game {
 
     resetSentence() {
         this.targetSentence = genSentence();
-        this.noSpaceTarget = Array.from(this.targetSentence.split(" ").join(""));
+        this.targetArray = Array.from(this.targetSentence);
+        // this.noSpaceTarget = Array.from(this.targetSentence.split(" ").join(""));
         setBanner(this.targetSentence);
     }
 
@@ -110,6 +127,8 @@ export default class Game {
     charOffCanvas(char) {
         if (char.yCoordinate > (this.height + char.height)) {
             this.lives --;
+            // console.log("live lost");
+            // debugger;
             return true
         } else {
             return false;
@@ -175,12 +194,12 @@ export default class Game {
 
     
     checkEntry(inputChar) {
-        debugger;
-        console.log(inputChar, "input char");
+        // debugger;
+        // console.log(inputChar, "input char");
         const matchingChars = this.characters.filter((char) => {
             if(char.character === inputChar && char.typeable) {
                 this.score = this.score + 10;
-                this.lives = Math.min(this.lives + 1, 5);
+                this.lives = Math.min(this.lives + 1, 3);
                 return true;
             }
         })
@@ -191,6 +210,7 @@ export default class Game {
             });
         } else {
             // console.log("miss!");
+            // debugger;
             return false;
         }
     }
@@ -198,6 +218,8 @@ export default class Game {
     drawBackdrop (color) {
         this.canvasInterface.fillStyle = color;
         this.canvasInterface.fillRect(0, 0, this.width, this.height);
+        // debugger;
+        this.canvasInterface.drawImage(this.img,0,0)
     }
 
     replayScreen() {
@@ -205,7 +227,7 @@ export default class Game {
         this.drawBackdrop("grey");
         this.characters = [];
         this.score = 0;
-        this.lives = 5;
+        this.lives = 3;
         this.charX = null;
 
         // this.canvasInterface.fillStyle = "black";
