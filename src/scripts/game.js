@@ -16,13 +16,9 @@ export default class Game {
         this.canvasInterface = canvasInterface;
         this.width = canvasInterface.canvas.width;
         this.height = canvasInterface.canvas.height;
-        this.characters = [];
-        this.score = 0;
-        this.lives = 30;
         this.gameOver = false;
-        this.resetSentence();
-        this.wordPause = 0;
-        this.charVel = 2
+
+        this.reset();
 
         this.xCharOptions = [
             this.width*0.20,
@@ -163,8 +159,13 @@ export default class Game {
     }
 
     start() {
-        this.gameOver = false;
         this.gameInterval = setInterval(() => {
+            
+            if (this.gameOver) {
+                this.reset();
+                this.gameOver = false;
+            }
+
             this.step();
             
             if (!this.gameOver) this.animate();
@@ -240,8 +241,18 @@ export default class Game {
         // this.canvasInterface.fillText(`Select return to play again!`,msgX,msgY);
 
         setBanner("Game over :( select return to play again!")
+        // debugger;
     }
 
-    
+    //called at initiation of each new game
+    reset() {
+        this.characters = [];
+        this.score = 0;
+        this.lives = 3;
+        this.charX = null;
+        this.resetSentence();
+        this.wordPause = 0;
+        this.charVel = 2;
+    }
 }
         

@@ -38,7 +38,9 @@ export default class View {
         const key = event.key;
         // debugger;
 
-        if (key === ' ') {
+        if (key === ' ' || key === 'Enter') {
+            // debugger;
+            console.log("restarting");
             this.gameToggle();
         } else if (key === 'ArrowRight') {
             this.game.step();
@@ -46,7 +48,7 @@ export default class View {
         } else if (View.INPUT.indexOf(key) >= 0) {
             this.game.checkEntry(key);
         } else {
-            console.log(key, "non processed input");
+            console.log(key, `did not process your ${key}`);
         }
     }
 
