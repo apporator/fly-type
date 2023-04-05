@@ -6,6 +6,7 @@ export default class MovingObject {
         this.xVelocity = argsHash.xVelocity; 
         this.yVelocity = argsHash.yVelocity; 
         this.color = argsHash.color;
+        this.transparency = argsHash.transparency || 1;
     }
 
     move() {
