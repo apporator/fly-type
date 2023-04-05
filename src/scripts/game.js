@@ -18,6 +18,9 @@ export default class Game {
         this.height = canvasInterface.canvas.height;
         this.gameOver = false;
 
+        this.scoreOutput = document.getElementById("game-score");
+        this.livesOutput = document.getElementById("game-lives");
+
         this.reset();
 
         this.xCharOptions = [
@@ -46,6 +49,14 @@ export default class Game {
             height: 33,
             canvasInterface: this.canvasInterface
         })
+    }
+
+    printScore() {
+        this.scoreOutput.innerHTML = this.score;
+    }
+
+    printLives() {
+        this.livesOutput.innerHTML = this.lives;
     }
 
     addChar() {
@@ -141,21 +152,24 @@ export default class Game {
     }
 
     drawCounters() {
-        
-        this.canvasInterface.fillStyle = "black";
-        this.canvasInterface.font = '14px Arial';
-        
-        //draw score
-        const scoreX =  0.01*this.width;
-        const scoreY =  0.99*this.height;
 
-        this.canvasInterface.fillText(`Score: ${this.score}`,scoreX,scoreY);
-
-        //draw lives
-        const livesX =  0.89*this.width;
-        const livesY =  0.99*this.height;
+        this.printLives();
+        this.printScore();
         
-        this.canvasInterface.fillText(`Lives: ${this.lives}`,livesX,livesY);
+        // this.canvasInterface.fillStyle = "black";
+        // this.canvasInterface.font = '14px Arial';
+        
+        // //draw score
+        // const scoreX =  0.01*this.width;
+        // const scoreY =  0.99*this.height;
+
+        // this.canvasInterface.fillText(`Score: ${this.score}`,scoreX,scoreY);
+
+        // //draw lives
+        // const livesX =  0.89*this.width;
+        // const livesY =  0.99*this.height;
+        
+        // this.canvasInterface.fillText(`Lives: ${this.lives}`,livesX,livesY);
     }
 
     start() {
@@ -253,6 +267,8 @@ export default class Game {
         this.resetSentence();
         this.wordPause = 0;
         this.charVel = 2;
+        this.printLives();
+        this.printScore();
     }
 }
         
