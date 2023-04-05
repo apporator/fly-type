@@ -46,7 +46,7 @@ export default class Game {
             yVelocity: 0, 
             color: "lightgrey",
             width: this.width,
-            height: 33,
+            height: 50,
             canvasInterface: this.canvasInterface
         })
     }
@@ -177,14 +177,33 @@ export default class Game {
     }
 
     pause() {
+        
         clearInterval(this.gameInterval);
         clearInterval(this.charInterval);
     }
 
     colorChar(char) {
-        if (char.yCoordinate >= this.targetBar.yCoordinate && char.yCoordinate <= (this.targetBar.yCoordinate + this.targetBar.height + char.height)) {
+        //checks if it is within the topmost and bottommost bounds of the target bar
+        
+        //the top of the bar
+        const entry = this.targetBar.yCoordinate;
+        const exit = this.targetBar.yCoordinate + this.targetBar.height + char.height;
+
+        if (char.yCoordinate >= entry && char.yCoordinate <= exit) {
+
+            let diff = exit - entry;
+            let segment = (char.yCoordinate - entry) / diff
+
+            if (segment >= 0.2 && segment <= 0.8) {
+                char.color = "green";
+            // } else if (segment >= 0.2 || segment <= 0.8) {
+            //     char.color = "yellow";
+            } else {
+                char.color = "red";
+            }
+
             char.typeable = true;
-            char.color = "red";
+            
         } else {
             char.typeable = false;
             char.color = "black";
@@ -193,8 +212,8 @@ export default class Game {
 
     
     checkEntry(inputChar) {
-        // debugger;
-        // console.log(inputChar, "input char");
+        
+        //1. for each character that matches the user's input and is in the hit zone, give the user points, increase their lives, and add the character to a separate array to be deleted
         const matchingChars = this.characters.filter((char) => {
             if(char.character === inputChar && char.typeable) {
                 this.score = this.score + 10;
@@ -202,6 +221,8 @@ export default class Game {
                 return true;
             }
         })
+
+        // cycle through these matching characters and delete them from the game as they have been hit
         if (matchingChars.length > 0) {
             matchingChars.forEach((hitChar) => {
                 const delIdx = this.characters.indexOf(hitChar);
