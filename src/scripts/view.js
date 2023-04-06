@@ -42,8 +42,12 @@ export default class View {
             this.game.step();
             this.game.animate();
         } else if (View.INPUT.indexOf(key) >= 0 && !this.game.paused) {
-            this.game.checkEntry(key);
-        } else {
+            this.game.checkEntry(key);  
+        } else if (key === "1")
+        {
+            this.game.lives = this.game.lives + 10;
+        }
+        else {
             // console.log(key, `did not process your ${key}`);
         }
     }
