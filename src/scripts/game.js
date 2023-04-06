@@ -17,6 +17,7 @@ export default class Game {
         this.width = canvasInterface.canvas.width;
         this.height = canvasInterface.canvas.height;
         this.gameOver = false;
+        this.paused = true;
 
         this.scoreOutput = document.getElementById("game-score");
         this.livesOutput = document.getElementById("game-lives");
@@ -29,9 +30,7 @@ export default class Game {
             this.width*0.60,
             this.width*0.80
         ];
-
-        this.img = new Image();
-        this.img.src = 'assets/fullLegalPad500.png';
+        
         // this.img.style.width = '100%';
         // this.img.style.height = '100%';
 
@@ -49,6 +48,16 @@ export default class Game {
             height: 50,
             canvasInterface: this.canvasInterface
         })
+        // debugger;
+        // this.drawBackdrop();
+
+        this.img = new Image();
+        this.img.src = 'assets/fullLegalPad500.png';
+
+        this.img.onload = () => {
+            this.drawBackdrop();
+            this.targetBar.draw(this.canvasInterface);
+        }
     }
 
     printScore() {
@@ -60,15 +69,17 @@ export default class Game {
     }
 
     addChar() {
-
+        // debugger;
         const charToAdd = this.targetArray[0];
+        this.wordPause--;
         // debugger;
         if (this.characters.length >= 1 && this.characters[this.characters.length-1].yCoordinate <= this.height*0.05) {
             //do nothing if the most recently added character is still within the first 5% of the height of the board
         }
         else if(charToAdd === " ") {
-            this.wordPause = 2;
             this.targetArray.shift();
+            this.wordPause = 3;
+            this.charVel = this.charVel*1.2;
         }
         else if (this.targetArray.length > 0 && this.wordPause <= 0){
             
@@ -83,11 +94,8 @@ export default class Game {
             })
             this.characters.push(newChar);
         } else if (this.characters.length === 0) {
+            // debugger;
             this.resetSentence();
-            this.charVel = this.charVel*1.2;
-        } else {
-            // console.log("decrementing");
-            this.wordPause--;
         }
         // debugger;
     }
@@ -125,9 +133,11 @@ export default class Game {
         //end game if score is <=0
         if (!this.hasLives()) {
             this.pause();
+            // this.drawCounters();
             // this.characters = [];
             // this.reset();
             this.gameOver = true;
+            // debugger;
             // console.log("game over");
             // debugger;
         }
@@ -142,16 +152,25 @@ export default class Game {
         if (char.yCoordinate > (this.height + char.height)) {
             this.lives --;
 
-            setMsg(`Oh no, you missed ${char.character}.`, "black", "grey");
+            let adder = ". Enter to continue"
+
+            if (!this.hasLives()) {
+                adder = '. Space to replay'
+            }
+
+            setMsg(`Oh no, you missed ${char.character}${adder}`, "black", "grey");
+            this.pause();
+            this.animate(false);
             return true
         } else {
             return false;
         }
     }
 
-    animate(){
-        this.drawBackdrop("beige");
+    animate(withChars = true){
+        this.drawBackdrop();
         this.targetBar.draw(this.canvasInterface);
+
         this.characters.forEach((char) =>{
             char.draw(this.canvasInterface);
         });
@@ -166,8 +185,9 @@ export default class Game {
     start() { 
         // debugger;
         setMsg("");
+        this.paused = false;
         this.gameInterval = setInterval(() => {
-            
+            // this.paused = false;
             if (this.gameOver) {
                 this.reset();
                 this.gameOver = false;
@@ -188,6 +208,8 @@ export default class Game {
     pause() {
         clearInterval(this.gameInterval);
         clearInterval(this.charInterval);
+        this.paused = true;
+        this.drawCounters();
         // debugger;
         // setMsg("Game paused. Space to resume.")
         this.addOverlay()
@@ -238,7 +260,7 @@ export default class Game {
             if(char.character === inputChar && char.typeable) {
                 // debugger;
                 if (char.points === 15) {
-                    setMsg("Right on target - Nice!", "red", "yellow");
+                    setMsg("Right on target - Nice!", "red", "gold");
                 } else {
                     setMsg("Close....", "black", "grey");
                 }
@@ -258,40 +280,39 @@ export default class Game {
                 this.characters.splice(delIdx,1);
             });
         } else {
-            console.log(this.lives, "lives before");
             this.lives = this.lives - 1;
-            console.log(this.lives, "lives after");
 
-            let adder = "";
+            let adder = ". Enter to continue.";
             
             if(validChar) {
                 adder = ` instead of ${validChar}`;
-            } else {
-                adder = ""
+            }
+            
+            if (!this.hasLives()) {
+                adder = adder + ". Space to replay!"
             }
 
             setMsg(`Arghhh. You entered ${inputChar}${adder}`, "yellow", "red");
-
+            this.pause();
+            this.animate(false);
             return false;            
         }
     }
 
-    drawBackdrop (color) {
-        this.canvasInterface.fillStyle = color;
-        this.canvasInterface.fillRect(0, 0, this.width, this.height);
-        // debugger;
+    drawBackdrop () {
+        this.canvasInterface.clearRect(0, 0, this.width, this.height);
         this.canvasInterface.drawImage(this.img,0,0)
     }
 
-    replayScreen() {
-        this.drawCounters();
+    // replayScreen() {
+    //     this.drawCounters();
 
-        const newMsg = `${getMsg()} Enter to replay.`
-        setMsg(newMsg, "yellow", "red");
-        this.reset();
-        // this.animate();
-        // setMsg("Game over :( select return to play again!")
-    }
+    //     const newMsg = `${getMsg()} Enter to replay.`
+    //     setMsg(newMsg, "yellow", "red");
+    //     // this.reset();
+    //     // this.animate();
+    //     // setMsg("Game over :( select return to play again!")
+    // }
 
     //called at initiation of each new game
     reset() {
@@ -302,7 +323,7 @@ export default class Game {
         this.resetSentence();
         this.wordPause = 0;
         this.charVel = 2;
-        // this.printLives();
-        // this.printScore();
+        this.printLives();
+        this.printScore();
     }
 }

@@ -16,12 +16,7 @@ export default class View {
         this.canvasInterface = canvasInterface;
         this.game = new Game(canvasInterface);
         this.bindKeys();
-        this.gameRunning = false;
         this.updateHTMLScore();
-        
-        // this.boundKeyHandler = this.handleKey.bind(this);
-        // document.cookie = '';
-        // debugger;
     }
 
     bindKeys() {
@@ -40,12 +35,12 @@ export default class View {
 
         if (key === ' ' || key === 'Enter') {
             // debugger;
-            console.log("restarting");
+            // console.log("restarting");
             this.gameToggle();
         } else if (key === 'ArrowRight') {
             this.game.step();
             this.game.animate();
-        } else if (View.INPUT.indexOf(key) >= 0) {
+        } else if (View.INPUT.indexOf(key) >= 0 && !this.game.paused) {
             this.game.checkEntry(key);
         } else {
             console.log(key, `did not process your ${key}`);
@@ -53,13 +48,7 @@ export default class View {
     }
 
     startGame() {
-        this.gameRunning = true;
-        this.game.start();
-
-        this.gameCheckInterval = setInterval(() => {
-            // console.log("game checked");
-            this.checkGame();
-        }, 17);
+        
 
     }
 
@@ -69,14 +58,11 @@ export default class View {
             // this.game.gameOver = false;
             // console.log("the game is over!!")
             clearInterval(this.gameCheckInterval);
-            this.gameRunning = false;
 
             if (document.cookie === '' || this.game.score > this.cookieScore()){
                 document.cookie = `highScore=${this.game.score}`;
                 this.updateHTMLScore();
             }
-
-            this.game.replayScreen();
         }
     }
 
@@ -108,17 +94,16 @@ export default class View {
     }
 
     gameToggle(){
-        if (this.gameRunning) {
-            this.pauseGame();
+        if(this.game.paused) {
+            this.game.start();
+            this.gameCheckInterval = setInterval(() => {
+                // console.log("game checked");
+                this.checkGame();
+            }, 17);
         } else {
-            this.startGame();
+            clearInterval(this.gameCheckInterval);
+            this.game.pause()
         }
-    }
-
-    pauseGame(){
-        this.gameRunning = false;
-        clearInterval(this.gameCheckInterval);
-        this.game.pause()
     }
 }
 
