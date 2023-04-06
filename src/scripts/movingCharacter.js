@@ -10,6 +10,7 @@ export default class MovingCharacter extends MovingRectangle {
         this.color = (argsHash.color || "black");
         this.canvasInterface = argsHash.canvasInterface;
         this.typeable = argsHash.typeable;
+        this.points = 0;
     }
 
     draw(canvasInterface) {

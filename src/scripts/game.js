@@ -1,6 +1,6 @@
 import MovingCharacter from "./movingCharacter";
 import MovingRectangle from "./movingRectangle";
-import { genSentence, selectRand, setBanner } from "./util";
+import { genSentence, getMsg, selectRand, setBanner, setMsg } from "./util";
 
 export default class Game {
    
@@ -31,7 +31,7 @@ export default class Game {
         ];
 
         this.img = new Image();
-        this.img.src = '../assets/fullLegalPad500.png';
+        this.img.src = '/assets/fullLegalPad500.png';
         // this.img.style.width = '100%';
         // this.img.style.height = '100%';
 
@@ -63,7 +63,10 @@ export default class Game {
 
         const charToAdd = this.targetArray[0];
         // debugger;
-        if (charToAdd === " ") {
+        if (this.characters.length >= 1 && this.characters[this.characters.length-1].yCoordinate <= this.height*0.05) {
+            //do nothing if the most recently added character is still within the first 5% of the height of the board
+        }
+        else if(charToAdd === " ") {
             this.wordPause = 2;
             this.targetArray.shift();
         }
@@ -120,7 +123,7 @@ export default class Game {
         }
         
         //end game if score is <=0
-        if (this.lives <= 0) {
+        if (!this.hasLives()) {
             this.pause();
             // this.characters = [];
             // this.reset();
@@ -131,11 +134,15 @@ export default class Game {
         // console.log(this.characters.length, "num of chars");
     }
 
+    hasLives() {
+        return this.lives > 0;
+    }
+
     charOffCanvas(char) {
         if (char.yCoordinate > (this.height + char.height)) {
             this.lives --;
-            // console.log("live lost");
-            // debugger;
+
+            setMsg(`Oh no, you missed ${char.character}.`, "black", "grey");
             return true
         } else {
             return false;
@@ -156,7 +163,9 @@ export default class Game {
         this.printScore();
     }
 
-    start() {
+    start() { 
+        // debugger;
+        setMsg("");
         this.gameInterval = setInterval(() => {
             
             if (this.gameOver) {
@@ -177,9 +186,18 @@ export default class Game {
     }
 
     pause() {
-        
         clearInterval(this.gameInterval);
         clearInterval(this.charInterval);
+        // debugger;
+        // setMsg("Game paused. Space to resume.")
+        this.addOverlay()
+    }
+
+    addOverlay(color = "grey", transparency = 0.5) {
+        this.canvasInterface.globalAlpha = transparency;
+        this.canvasInterface.fillStyle = color;
+        this.canvasInterface.fillRect(0,0,this.width,this.height);
+        this.canvasInterface.globalAlpha = 1;
     }
 
     colorChar(char) {
@@ -196,29 +214,40 @@ export default class Game {
 
             if (segment >= 0.2 && segment <= 0.8) {
                 char.color = "green";
-            // } else if (segment >= 0.2 || segment <= 0.8) {
-            //     char.color = "yellow";
+                char.points = 15;
             } else {
                 char.color = "red";
+                char.points = 10;
             }
 
-            char.typeable = true;
-            
+            char.typeable = true;      
         } else {
             char.typeable = false;
+            char.points = 0;
             char.color = "black";
         }
     }
 
     
     checkEntry(inputChar) {
-        
+
+        let validChar = null;
+
         //1. for each character that matches the user's input and is in the hit zone, give the user points, increase their lives, and add the character to a separate array to be deleted
         const matchingChars = this.characters.filter((char) => {
             if(char.character === inputChar && char.typeable) {
-                this.score = this.score + 10;
+                // debugger;
+                if (char.points === 15) {
+                    setMsg("Right on target - Nice!", "red", "yellow");
+                } else {
+                    setMsg("Close....", "black", "grey");
+                }
+
+                this.score = this.score + char.points;
                 this.lives = Math.min(this.lives + 1, 3);
                 return true;
+            } else if (char.typeable) {
+                validChar = char.character;
             }
         })
 
@@ -229,9 +258,21 @@ export default class Game {
                 this.characters.splice(delIdx,1);
             });
         } else {
-            // console.log("miss!");
-            // debugger;
-            return false;
+            console.log(this.lives, "lives before");
+            this.lives = this.lives - 1;
+            console.log(this.lives, "lives after");
+
+            let adder = "";
+            
+            if(validChar) {
+                adder = ` instead of ${validChar}`;
+            } else {
+                adder = ""
+            }
+
+            setMsg(`Arghhh. You entered ${inputChar}${adder}`, "yellow", "red");
+
+            return false;            
         }
     }
 
@@ -243,24 +284,13 @@ export default class Game {
     }
 
     replayScreen() {
-        // console.log("replay screen")
-        this.drawBackdrop("grey");
-        this.characters = [];
-        this.score = 0;
-        this.lives = 3;
-        this.charX = null;
+        this.drawCounters();
 
-        // this.canvasInterface.fillStyle = "black";
-        // this.canvasInterface.font = '26px Arial';
-        
-        // //draw score
-        // const msgX =  0.20*this.width;
-        // const msgY =  0.50*this.height;
-
-        // this.canvasInterface.fillText(`Select return to play again!`,msgX,msgY);
-
-        setBanner("Game over :( select return to play again!")
-        // debugger;
+        const newMsg = `${getMsg()} Enter to replay.`
+        setMsg(newMsg, "yellow", "red");
+        this.reset();
+        // this.animate();
+        // setMsg("Game over :( select return to play again!")
     }
 
     //called at initiation of each new game
@@ -272,7 +302,7 @@ export default class Game {
         this.resetSentence();
         this.wordPause = 0;
         this.charVel = 2;
-        this.printLives();
-        this.printScore();
+        // this.printLives();
+        // this.printScore();
     }
 }

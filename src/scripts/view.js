@@ -117,6 +117,7 @@ export default class View {
 
     pauseGame(){
         this.gameRunning = false;
+        clearInterval(this.gameCheckInterval);
         this.game.pause()
     }
 }

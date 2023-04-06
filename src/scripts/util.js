@@ -1,5 +1,7 @@
 import Game from "./game";
 
+let color = true;
+
 export function selectRand(array) {
     if(!array.length) return null;
 
@@ -23,4 +25,16 @@ export function genSentence() {
 export function setBanner(msg) {
     const senDiv = document.getElementById("sentence")
     senDiv.innerHTML = msg;
+}
+
+const msgDiv = document.getElementById("message")
+
+export function setMsg(msg, color = "", background = "") {
+    msgDiv.style.backgroundColor = background;
+    msgDiv.style.color = color;
+    msgDiv.innerHTML = msg;
+}
+
+export function getMsg() {
+    return msgDiv.innerHTML;
 }
