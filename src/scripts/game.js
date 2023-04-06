@@ -17,6 +17,7 @@ export default class Game {
         this.width = canvasInterface.canvas.width;
         this.height = canvasInterface.canvas.height;
         this.gameOver = false;
+        this.paused = true;
 
         this.scoreOutput = document.getElementById("game-score");
         this.livesOutput = document.getElementById("game-lives");
@@ -125,9 +126,11 @@ export default class Game {
         //end game if score is <=0
         if (!this.hasLives()) {
             this.pause();
+            // this.drawCounters();
             // this.characters = [];
             // this.reset();
             this.gameOver = true;
+            // debugger;
             // console.log("game over");
             // debugger;
         }
@@ -142,18 +145,31 @@ export default class Game {
         if (char.yCoordinate > (this.height + char.height)) {
             this.lives --;
 
-            setMsg(`Oh no, you missed ${char.character}.`, "black", "grey");
+            let adder = ""
+
+            if (!this.hasLives()) {
+                adder = '. Enter to replay.'
+            }
+
+            setMsg(`Oh no, you missed ${char.character}${adder}.`, "black", "grey");
+            this.pause();
+            this.animate(false);
             return true
         } else {
             return false;
         }
     }
 
-    animate(){
-        this.drawBackdrop("beige");
+    animate(withChars = true){
+        this.drawBackdrop();
         this.targetBar.draw(this.canvasInterface);
+
         this.characters.forEach((char) =>{
-            char.draw(this.canvasInterface);
+            if (withChars) {
+                char.draw(this.canvasInterface);
+            } else if (char.typeable) {
+                char.draw(this.canvasInterface);
+            }
         });
         this.drawCounters();
     }
@@ -166,8 +182,9 @@ export default class Game {
     start() { 
         // debugger;
         setMsg("");
+        this.paused = false;
         this.gameInterval = setInterval(() => {
-            
+            // this.paused = false;
             if (this.gameOver) {
                 this.reset();
                 this.gameOver = false;
@@ -188,6 +205,8 @@ export default class Game {
     pause() {
         clearInterval(this.gameInterval);
         clearInterval(this.charInterval);
+        this.paused = true;
+        this.drawCounters();
         // debugger;
         // setMsg("Game paused. Space to resume.")
         this.addOverlay()
@@ -258,40 +277,39 @@ export default class Game {
                 this.characters.splice(delIdx,1);
             });
         } else {
-            console.log(this.lives, "lives before");
             this.lives = this.lives - 1;
-            console.log(this.lives, "lives after");
 
             let adder = "";
             
             if(validChar) {
                 adder = ` instead of ${validChar}`;
-            } else {
-                adder = ""
+            }
+            
+            if (!this.hasLives()) {
+                adder = adder + ". Enter to replay!"
             }
 
             setMsg(`Arghhh. You entered ${inputChar}${adder}`, "yellow", "red");
-
+            this.pause();
+            this.animate(false);
             return false;            
         }
     }
 
-    drawBackdrop (color) {
-        this.canvasInterface.fillStyle = color;
+    drawBackdrop () {
         this.canvasInterface.fillRect(0, 0, this.width, this.height);
-        // debugger;
         this.canvasInterface.drawImage(this.img,0,0)
     }
 
-    replayScreen() {
-        this.drawCounters();
+    // replayScreen() {
+    //     this.drawCounters();
 
-        const newMsg = `${getMsg()} Enter to replay.`
-        setMsg(newMsg, "yellow", "red");
-        this.reset();
-        // this.animate();
-        // setMsg("Game over :( select return to play again!")
-    }
+    //     const newMsg = `${getMsg()} Enter to replay.`
+    //     setMsg(newMsg, "yellow", "red");
+    //     // this.reset();
+    //     // this.animate();
+    //     // setMsg("Game over :( select return to play again!")
+    // }
 
     //called at initiation of each new game
     reset() {
@@ -302,7 +320,7 @@ export default class Game {
         this.resetSentence();
         this.wordPause = 0;
         this.charVel = 2;
-        // this.printLives();
-        // this.printScore();
+        this.printLives();
+        this.printScore();
     }
 }
