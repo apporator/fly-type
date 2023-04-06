@@ -47,11 +47,6 @@ export default class View {
         }
     }
 
-    startGame() {
-        
-
-    }
-
     //this checker checks whether the game is over and if so takes the necessary action
     checkGame() {
         if (this.game.gameOver) {

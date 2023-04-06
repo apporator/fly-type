@@ -38,3 +38,14 @@ export function setMsg(msg, color = "", background = "") {
 export function getMsg() {
     return msgDiv.innerHTML;
 }
+
+export function calculateCirclePoints(centerX, centerY, radius, numPoints) {
+    const points = [];
+    for (let i = 0; i < numPoints; i++) {
+      const angle = i * 2 * Math.PI / numPoints;
+      const x = centerX + radius * Math.cos(angle);
+      const y = centerY + radius * Math.sin(angle);
+      points.push({x: x, y: y});
+    }
+    return points;
+  }

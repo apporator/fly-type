@@ -1,5 +1,6 @@
 import MovingCharacter from "./movingCharacter";
 import MovingRectangle from "./movingRectangle";
+import Spiral from "./spiral";
 import { genSentence, getMsg, selectRand, setBanner, setMsg } from "./util";
 
 export default class Game {
@@ -58,6 +59,23 @@ export default class Game {
             this.drawBackdrop();
             this.targetBar.draw(this.canvasInterface);
         }
+
+        // let spiralY = this.height*0.2;
+        this.wordSpirals = [];
+
+        this.xCharOptions.forEach((x) => {
+                const newSpiral = new Spiral({
+                xCoordinate: x,
+                yCoordinate: this.height*0.2,
+                xVelocity: 0, 
+                yVelocity: 0, 
+                // color: "lightgrey",
+                // width: this.width,
+                // height: 50,
+                canvasInterface: this.canvasInterface
+            })
+            this.wordSpirals.push(newSpiral);
+        });
     }
 
     printScore() {
@@ -82,10 +100,10 @@ export default class Game {
             this.charVel = this.charVel*1.2;
         }
         else if (this.targetArray.length > 0 && this.wordPause <= 0){
-            
+            // debugger;
             const newChar = new MovingCharacter({
-                xCoordinate: selectRand(this.xCharOptions),
-                yCoordinate: 0,
+                xCoordinate: selectRand(this.wordSpirals).xDrop,
+                yCoordinate: this.wordSpirals[0].yDrop,
                 xVelocity: 0, 
                 yVelocity: this.charVel, 
                 character: this.targetArray.shift(),
@@ -129,6 +147,10 @@ export default class Game {
                 this.colorChar(char);
             }
         }
+
+        this.wordSpirals.forEach((spiral) => {
+            spiral.move();
+        })
         
         //end game if score is <=0
         if (!this.hasLives()) {
@@ -174,6 +196,11 @@ export default class Game {
         this.characters.forEach((char) =>{
             char.draw(this.canvasInterface);
         });
+        
+        this.wordSpirals.forEach((spiral) => {
+            spiral.draw();
+        });
+        
         this.drawCounters();
     }
 
