@@ -30,9 +30,7 @@ export default class Game {
             this.width*0.60,
             this.width*0.80
         ];
-
-        this.img = new Image();
-        this.img.src = 'assets/fullLegalPad500.png';
+        
         // this.img.style.width = '100%';
         // this.img.style.height = '100%';
 
@@ -50,6 +48,16 @@ export default class Game {
             height: 50,
             canvasInterface: this.canvasInterface
         })
+        // debugger;
+        // this.drawBackdrop();
+
+        this.img = new Image();
+        this.img.src = 'assets/fullLegalPad500.png';
+
+        this.img.onload = () => {
+            this.drawBackdrop();
+            this.targetBar.draw(this.canvasInterface);
+        }
     }
 
     printScore() {
@@ -61,15 +69,17 @@ export default class Game {
     }
 
     addChar() {
-
+        // debugger;
         const charToAdd = this.targetArray[0];
+        this.wordPause--;
         // debugger;
         if (this.characters.length >= 1 && this.characters[this.characters.length-1].yCoordinate <= this.height*0.05) {
             //do nothing if the most recently added character is still within the first 5% of the height of the board
         }
         else if(charToAdd === " ") {
-            this.wordPause = 2;
             this.targetArray.shift();
+            this.wordPause = 3;
+            this.charVel = this.charVel*1.2;
         }
         else if (this.targetArray.length > 0 && this.wordPause <= 0){
             
@@ -84,11 +94,8 @@ export default class Game {
             })
             this.characters.push(newChar);
         } else if (this.characters.length === 0) {
+            // debugger;
             this.resetSentence();
-            this.charVel = this.charVel*1.2;
-        } else {
-            // console.log("decrementing");
-            this.wordPause--;
         }
         // debugger;
     }
@@ -145,13 +152,13 @@ export default class Game {
         if (char.yCoordinate > (this.height + char.height)) {
             this.lives --;
 
-            let adder = ""
+            let adder = ". Enter to continue"
 
             if (!this.hasLives()) {
-                adder = '. Enter to replay.'
+                adder = '. Space to replay'
             }
 
-            setMsg(`Oh no, you missed ${char.character}${adder}.`, "black", "grey");
+            setMsg(`Oh no, you missed ${char.character}${adder}`, "black", "grey");
             this.pause();
             this.animate(false);
             return true
@@ -165,11 +172,7 @@ export default class Game {
         this.targetBar.draw(this.canvasInterface);
 
         this.characters.forEach((char) =>{
-            if (withChars) {
-                char.draw(this.canvasInterface);
-            } else if (char.typeable) {
-                char.draw(this.canvasInterface);
-            }
+            char.draw(this.canvasInterface);
         });
         this.drawCounters();
     }
@@ -257,7 +260,7 @@ export default class Game {
             if(char.character === inputChar && char.typeable) {
                 // debugger;
                 if (char.points === 15) {
-                    setMsg("Right on target - Nice!", "red", "yellow");
+                    setMsg("Right on target - Nice!", "red", "gold");
                 } else {
                     setMsg("Close....", "black", "grey");
                 }
@@ -279,14 +282,14 @@ export default class Game {
         } else {
             this.lives = this.lives - 1;
 
-            let adder = "";
+            let adder = ". Enter to continue.";
             
             if(validChar) {
                 adder = ` instead of ${validChar}`;
             }
             
             if (!this.hasLives()) {
-                adder = adder + ". Enter to replay!"
+                adder = adder + ". Space to replay!"
             }
 
             setMsg(`Arghhh. You entered ${inputChar}${adder}`, "yellow", "red");
@@ -297,7 +300,7 @@ export default class Game {
     }
 
     drawBackdrop () {
-        this.canvasInterface.fillRect(0, 0, this.width, this.height);
+        this.canvasInterface.clearRect(0, 0, this.width, this.height);
         this.canvasInterface.drawImage(this.img,0,0)
     }
 

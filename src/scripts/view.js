@@ -35,12 +35,12 @@ export default class View {
 
         if (key === ' ' || key === 'Enter') {
             // debugger;
-            console.log("restarting");
+            // console.log("restarting");
             this.gameToggle();
         } else if (key === 'ArrowRight') {
             this.game.step();
             this.game.animate();
-        } else if (View.INPUT.indexOf(key) >= 0) {
+        } else if (View.INPUT.indexOf(key) >= 0 && !this.game.paused) {
             this.game.checkEntry(key);
         } else {
             console.log(key, `did not process your ${key}`);
