@@ -91,7 +91,9 @@ export default class Game {
         const charToAdd = this.targetArray[0];
         this.wordPause--;
         // debugger;
-        if (this.characters.length >= 1 && this.characters[this.characters.length-1].yCoordinate <= this.height*0.05) {
+        if (this.wordPause > 0) {
+            --this.wordPause;
+        } else if (this.characters.length >= 1 && this.characters[this.characters.length-1].yCoordinate <= this.height*0.05) {
             //do nothing if the most recently added character is still within the first 5% of the height of the board
         }
         else if(charToAdd === " ") {
@@ -155,6 +157,7 @@ export default class Game {
         //end game if score is <=0
         if (!this.hasLives()) {
             this.pause();
+            this.slowChars();
             // this.drawCounters();
             // this.characters = [];
             // this.reset();
@@ -166,6 +169,15 @@ export default class Game {
         // console.log(this.characters.length, "num of chars");
     }
 
+    slowChars() {
+        console.log("chars slowed");
+        this.characters.forEach((char) => {
+            char.yVelocity = 0.8;
+        })
+        this.wordPause = 15;
+        this.charVel = 2;
+    }
+
     hasLives() {
         return this.lives > 0;
     }
@@ -174,14 +186,15 @@ export default class Game {
         if (char.yCoordinate > (this.height + char.height)) {
             this.lives --;
 
-            let adder = ". Enter to continue"
+            let adder = ""
 
             if (!this.hasLives()) {
-                adder = '. Space to replay'
+                adder = '. Enter to replay'
             }
 
             setMsg(`Oh no, you missed ${char.character}${adder}`, "black", "grey");
-            this.pause();
+            // this.pause();
+            this.slowChars();
             this.animate(false);
             return true
         } else {
@@ -292,8 +305,8 @@ export default class Game {
                     setMsg("Close....", "black", "grey");
                 }
 
-                this.score = this.score + char.points;
-                this.lives = Math.min(this.lives + 1, 3);
+                this.score = Math.floor(this.score + char.points*char.yVelocity);
+                // this.lives = Math.min(this.lives + 1, 3);
                 return true;
             } else if (char.typeable) {
                 validChar = char.character;
@@ -319,8 +332,9 @@ export default class Game {
                 adder = adder + ". Space to replay!"
             }
 
-            setMsg(`Arghhh. You entered ${inputChar}${adder}`, "yellow", "red");
-            this.pause();
+            setMsg(`Argh. You entered ${inputChar}${adder}`, "yellow", "red");
+            this.slowChars();
+            // this.pause();
             this.animate(false);
             return false;            
         }
