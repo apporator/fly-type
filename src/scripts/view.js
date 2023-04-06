@@ -43,7 +43,7 @@ export default class View {
         } else if (View.INPUT.indexOf(key) >= 0 && !this.game.paused) {
             this.game.checkEntry(key);
         } else {
-            console.log(key, `did not process your ${key}`);
+            // console.log(key, `did not process your ${key}`);
         }
     }
 
