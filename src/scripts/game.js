@@ -87,10 +87,8 @@ export default class Game {
     }
 
     addChar() {
-        // debugger;
         const charToAdd = this.targetArray[0];
         this.wordPause--;
-        // debugger;
         if (this.wordPause > 0) {
             --this.wordPause;
         } else if (this.characters.length >= 1 && this.characters[this.characters.length-1].yCoordinate <= this.height*0.05) {
@@ -102,7 +100,6 @@ export default class Game {
             this.charVel = this.charVel*1.2;
         }
         else if (this.targetArray.length > 0 && this.wordPause <= 0){
-            // debugger;
             const newChar = new MovingCharacter({
                 xCoordinate: selectRand(this.wordSpirals).xDrop,
                 yCoordinate: this.wordSpirals[0].yDrop,
@@ -114,10 +111,8 @@ export default class Game {
             })
             this.characters.push(newChar);
         } else if (this.characters.length === 0) {
-            // debugger;
             this.resetSentence();
         }
-        // debugger;
     }
 
     // removeChar() {
@@ -262,35 +257,6 @@ export default class Game {
         this.canvasInterface.globalAlpha = 1;
     }
 
-    colorChar(char) {
-        //checks if it is within the topmost and bottommost bounds of the target bar
-        
-        //the top of the bar
-        const entry = this.targetBar.yCoordinate;
-        const exit = this.targetBar.yCoordinate + this.targetBar.height + char.height;
-
-        if (char.yCoordinate >= entry && char.yCoordinate <= exit) {
-
-            let diff = exit - entry;
-            let segment = (char.yCoordinate - entry) / diff
-
-            if (segment >= 0.2 && segment <= 0.8) {
-                char.color = "yellow";
-                char.points = 15;
-            } else {
-                char.color = "red";
-                char.points = 10;
-            }
-
-            char.typeable = true;      
-        } else {
-            char.typeable = false;
-            char.points = 0;
-            char.color = "black";
-        }
-    }
-
-    
     checkEntry(inputChar) {
 
         let validChar = null;
@@ -322,14 +288,14 @@ export default class Game {
         } else {
             this.lives = this.lives - 1;
 
-            let adder = ". Enter to continue.";
+            let adder = "";
             
             if(validChar) {
                 adder = ` instead of ${validChar}`;
             }
             
             if (!this.hasLives()) {
-                adder = adder + ". Space to replay!"
+                adder = adder + ". Enter to replay!"
             }
 
             setMsg(`Argh. You entered ${inputChar}${adder}`, "yellow", "red");
@@ -337,6 +303,33 @@ export default class Game {
             // this.pause();
             this.animate(false);
             return false;            
+        }
+    }
+
+    colorChar(char) {
+        //checks if it is within the topmost and bottommost bounds of the target bar
+        
+        //the top of the bar
+        const entry = this.targetBar.yCoordinate;
+        const exit = this.targetBar.yCoordinate + this.targetBar.height + char.height;
+
+        if (char.yCoordinate >= entry && char.yCoordinate <= exit) {
+
+            let diff = exit - entry;
+            let segment = (char.yCoordinate - entry) / diff
+
+            if (segment >= 0.2 && segment <= 0.8) {
+                char.color = "yellow";
+                char.points = 15;
+            } else {
+                char.color = "red";
+                char.points = 10;
+            }
+            char.typeable = true;      
+        } else {
+            char.typeable = false;
+            char.points = 0;
+            char.color = "black";
         }
     }
 

@@ -83,8 +83,10 @@ header, footer {
     padding: 20px;
     /* background-color: rgba(255, 255, 255, 0.80); */
     box-sizing: border-box;
-    width: 20%;
+    width: 25%;
     /* border: 1px black solid; */
+    font-size: 16px;
+    overflow: scroll;
 }
 
 #inner-contents {
