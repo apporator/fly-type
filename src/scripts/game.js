@@ -1,7 +1,7 @@
 import MovingCharacter from "./movingCharacter";
 import MovingRectangle from "./movingRectangle";
 import Spiral from "./spiral";
-import { genSentence, getMsg, selectRand, setBanner, setMsg } from "./util";
+import { genSentence, getMsg, selectRand, setBanner, setMsg,  appendMiss, clearMiss} from "./util";
 
 export default class Game {
    
@@ -187,7 +187,10 @@ export default class Game {
                 adder = '. Enter to replay'
             }
 
-            setMsg(`Oh no, you missed ${char.character}${adder}`, "black", "grey");
+            let msg = `Oh no, you missed ${char.character}${adder}`;
+
+            setMsg(msg, "black", "grey");
+            appendMiss(msg);
             // this.pause();
             this.slowChars();
             this.animate(false);
@@ -298,7 +301,9 @@ export default class Game {
                 adder = adder + ". Enter to replay!"
             }
 
-            setMsg(`Argh. You entered ${inputChar}${adder}`, "yellow", "red");
+            let msg = `Argh. You entered ${inputChar}${adder}`;
+            setMsg(msg, "yellow", "red");
+            appendMiss(msg);
             this.slowChars();
             // this.pause();
             this.animate(false);
@@ -362,5 +367,6 @@ export default class Game {
         this.charVel = 2;
         this.printLives();
         this.printScore();
+        clearMiss();
     }
 }

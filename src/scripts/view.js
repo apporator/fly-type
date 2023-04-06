@@ -17,6 +17,7 @@ export default class View {
         this.game = new Game(canvasInterface);
         this.bindKeys();
         this.updateHTMLScore();
+
     }
 
     bindKeys() {

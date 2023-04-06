@@ -49,3 +49,16 @@ export function calculateCirclePoints(centerX, centerY, radius, numPoints) {
     }
     return points;
   }
+
+  const list = document.getElementById("lives-lost");
+
+  export function appendMiss(msg) {
+    
+    let entry = document.createElement("li");
+    entry.innerHTML = msg;
+    list.appendChild(entry);
+  }
+
+  export function clearMiss(){
+    list.innerHTML = "";
+  }
