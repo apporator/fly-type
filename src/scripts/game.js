@@ -165,7 +165,7 @@ export default class Game {
     }
 
     slowChars() {
-        console.log("chars slowed");
+        // console.log("chars slowed");
         this.characters.forEach((char) => {
             char.yVelocity = 0.8;
         })

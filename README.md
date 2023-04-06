@@ -5,9 +5,10 @@ Demonstrate your typing speed AND rhythm in FlyType, a [typing game](https://www
 
 1. a sentence is generated and displayed below the notepad
 2. its individual letters begin falling from letter swirls at the top of the notepad
-3. the user earns points for entering the relevant character as it passes through the highlight at the bottom of the notepad
-4. the user loses lives for missing a letter or entering one incorrectly
-5. the result of each press is displayed below the notepad
+3. the user
+* earns points for entering the relevant character as it passes through the highlight at the bottom of the notepad
+* loses lives for missing a letter or entering one incorrectly
+4. the result of each press is displayed below the notepad
 
 Scoring of an individual press is based on timing (how central it is to the bar) and the character's velocity. The game ends when lives get to zero. High scores are scored in browser cookies, though eventually a back end could be added to persist state.
 
