@@ -31,7 +31,7 @@ export default class Game {
         ];
 
         this.img = new Image();
-        this.img.src = '/assets/fullLegalPad500.png';
+        this.img.src = 'assets/fullLegalPad500.png';
         // this.img.style.width = '100%';
         // this.img.style.height = '100%';
 
