@@ -41,7 +41,7 @@ export default class Game {
         //initialize the target bar that the letters will cross and give it starting positions
         this.targetBar = new MovingRectangle({
             xCoordinate: 0,
-            yCoordinate: 411,
+            yCoordinate: this.height*0.65,
             xVelocity: 0, 
             yVelocity: 0, 
             color: "lightgrey",
