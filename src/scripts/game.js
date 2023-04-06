@@ -47,7 +47,7 @@ export default class Game {
             color: "lightgrey",
             width: this.width,
             height: 50,
-            canvasInterface: this.canvasInterface
+            canvasInterface: this.canvasInterface,
         })
         // debugger;
         // this.drawBackdrop();
@@ -262,7 +262,7 @@ export default class Game {
             let segment = (char.yCoordinate - entry) / diff
 
             if (segment >= 0.2 && segment <= 0.8) {
-                char.color = "green";
+                char.color = "yellow";
                 char.points = 15;
             } else {
                 char.color = "red";
@@ -328,7 +328,10 @@ export default class Game {
 
     drawBackdrop () {
         this.canvasInterface.clearRect(0, 0, this.width, this.height);
+        this.canvasInterface.globalAlpha = 0.4;
         this.canvasInterface.drawImage(this.img,0,0)
+
+        this.canvasInterface.globalAlpha = 1;
     }
 
     // replayScreen() {

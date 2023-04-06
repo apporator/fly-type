@@ -14,11 +14,11 @@ export default class MovingRectangle extends MovingObject {
 
         const gradient = canvasInterface.createLinearGradient(this.xCoordinate, this.yCoordinate, this.xCoordinate, this.yCoordinate + this.height);
         
-        gradient.addColorStop(0, "lightyellow");
-        gradient.addColorStop(0.30, "yellow");
-        gradient.addColorStop(0.5, "yellow");
-        gradient.addColorStop(0.70, "yellow");
-        gradient.addColorStop(1, "lightyellow");
+        gradient.addColorStop(0, "#abdbe3");
+        gradient.addColorStop(0.30, "#76b5c5");
+        gradient.addColorStop(0.5, "#76b5c5");
+        gradient.addColorStop(0.70, "#76b5c5");
+        gradient.addColorStop(1, "#abdbe3");
         
         // Set the fill style to the gradient
         canvasInterface.fillStyle = gradient;
