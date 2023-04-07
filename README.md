@@ -152,6 +152,8 @@ checkEntry(inputChar) {
 - moving/bouncing word spirals
 - mobile web support
 - signal to user they missed the character when it passes the target bar (rather than when it goes off the pad)
+- pulsing spirals
+- putting a pause on live decrements within a tight window of one another
 
 # Development
 See below for an early vision for FlyType. Note that it doesn't map exactly with current functionality, but having additional enhancements to make is half the fun!
