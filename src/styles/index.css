@@ -11,7 +11,8 @@ body {
     font-family: 'Alkatra', cursive;
 }
 
-header, footer {
+header,
+footer {
     height: 5%;
     width: 100%;
     /* border: 1px black solid; */
@@ -26,19 +27,21 @@ header, footer {
 
 .game-assets {
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-start;
     flex-direction: column;
     width: 100%;
     /* margin-left: auto; */
     /* margin-right: auto; */
     margin-top: 2%;
+    height: 100%;
 }
 
 .game-text {
     /* background-color: rgba(255, 255, 255, 0.80); */
 }
 
-#score, #lives {
+#score,
+#lives {
     width: 20%;
 }
 
@@ -86,10 +89,11 @@ header, footer {
     width: 25%;
     /* border: 1px black solid; */
     font-size: 16px;
-    overflow: scroll;
+
+    overflow: auto;
 }
 
-#inner-contents {
+*/ #inner-contents {
     /* background-color: beige; */
     background-image: url("../assets/letterBannerVector.png");
     background-repeat: no-repeat;
@@ -110,10 +114,15 @@ header, footer {
     justify-content: space-between;
 }
 
-.contains-words, #canvas-div {
+.contains-words,
+#canvas-div {
     border-radius: 7px;
     border: 1px black solid;
     background-color: rgba(255, 255, 255, 0.90);
+}
+
+.contains-words div {
+    width: 30%;
 }
 
 #word-image-container {
@@ -135,29 +144,33 @@ header {
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
-    padding-top: 1%;
-    padding-bottom: 1%;
-}
-
-header div {
-    /* border: 1px black solid; */
-    width: 125px;
+    padding: 1%;
 }
 
 header img {
     height: 100%;
-    width: 100%;
+    width: auto;
+    aspect-ratio: 1/1;
+    color: black;
 }
 
 #title {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 2vw;
 }
 
 #logos {
     display: flex;
-    justify-content: space-around;
+    flex-direction: row-reverse;
+    /* justify-content: space-around; */
+    height: 100%;
+    gap: 20px;
+}
+
+#logos a {
+    height: 100%;
 }
 
 footer {
