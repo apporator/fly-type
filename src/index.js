@@ -26,6 +26,26 @@ const canvasInterface = canvas.getContext('2d');
 
 //set the background for starters
 
+const userAgent = navigator.userAgent;
+const isMobile = /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+// console.log(isMobile, "ismobile");
+
+if(isMobile) {
+    const body = document.querySelector('body');
+    const overlayDiv = document.createElement('div');
+    overlayDiv.classList.add('overlay');
+
+    const mobileMsgDiv = document.createElement('div');
+    mobileMsgDiv.innerHTML = 'This application doesn\'t support mobile devices, please return on a desktop device.<br/><a href="https://apporator.github.io/fly-type/">https://apporator.github.io/fly-type/</a>'
+    mobileMsgDiv.classList.add('mobile-message');
+
+    const wordImageContainer = document.getElementById("word-image-container");
+
+    body.appendChild(overlayDiv);
+    overlayDiv.appendChild(mobileMsgDiv);
+    body.style.overflow = "hidden";
+    wordImageContainer.style.overflow = "hidden";
+}
 
 const view = new View(canvasInterface);
 window.view = view;
