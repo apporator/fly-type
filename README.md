@@ -1,7 +1,10 @@
-# Fly Type
+# Fly Type - [Live Site](https://apporator.github.io/fly-type/)
+Demonstrate your typing speed AND rhythm in FlyType, a [typing game](https://www.typing.com/student/typing-test/1-minute) and [Dance Dance Revolution](https://kittyisnotacat.com/rhythm-game) mix, similar to [Arrow Hero](https://acelisweaven.github.io/arrow-hero/#:~:text=Arrow%20hero%20is%20a%20minimalist,This%20game%20is%20mobile%20friendly.).
 
-## Game Description
-Demonstrate your typing speed AND rhythm in FlyType, a [typing game](https://www.typing.com/student/typing-test/1-minute) and [Dance Dance Revolution](https://kittyisnotacat.com/rhythm-game) mix, similar to [Arrow Hero](https://acelisweaven.github.io/arrow-hero/#:~:text=Arrow%20hero%20is%20a%20minimalist,This%20game%20is%20mobile%20friendly.). Upon starting the game:
+![](/assets/flyType-2.png)
+
+## Gameplay
+Upon starting the game:
 
 1. a sentence is generated and displayed below the notepad
 2. its individual letters begin falling from letter swirls at the top of the notepad
@@ -12,7 +15,6 @@ Demonstrate your typing speed AND rhythm in FlyType, a [typing game](https://www
 
 Scoring of an individual press is based on timing (how central it is to the bar) and the character's velocity. The game ends when lives get to zero. High scores are scored in browser cookies, though eventually a back end could be added to persist state.
 
-Game [here](https://apporator.github.io/fly-type/).
 Inspiration screencasts [here](https://www.icloud.com/sharedalbum/#B0i5idkMwMBZWa).
 
 ## Technologies
