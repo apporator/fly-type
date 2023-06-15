@@ -1,7 +1,9 @@
 # Fly Type - [Live Site](https://apporator.github.io/fly-type/)
 Demonstrate your typing speed AND rhythm in FlyType, a [typing game](https://www.typing.com/student/typing-test/1-minute) and [Dance Dance Revolution](https://kittyisnotacat.com/rhythm-game) mix, similar to [Arrow Hero](https://acelisweaven.github.io/arrow-hero/#:~:text=Arrow%20hero%20is%20a%20minimalist,This%20game%20is%20mobile%20friendly.).
 
-![](/assets/flyType-2.png)
+<div align="center">
+<img src="/assets/flyType-2.png" width="500"/>
+</div>
 
 ## Gameplay
 Upon starting the game:
