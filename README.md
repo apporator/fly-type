@@ -8,7 +8,7 @@ Demonstrate your typing speed AND rhythm in FlyType, a [typing game](https://www
 ## Gameplay
 Upon starting the game:
 
-1. a sentence is generated and displayed below the notepad
+1. a sentence is generated and displayed at the bottom of the notepad
 2. its individual letters begin falling from letter swirls at the top of the notepad
 3. the user
 * earns points for entering the relevant character as it passes through the highlight at the bottom of the notepad
