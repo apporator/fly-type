@@ -10,7 +10,7 @@ Upon starting the game:
 
 1. a sentence is generated and displayed at the bottom of the notepad
 2. its individual letters begin falling from letter swirls at the top of the notepad
-3. the user
+3. the user:
 * earns points for entering the relevant character as it passes through the highlight at the bottom of the notepad
 * loses lives for missing a letter or entering one incorrectly
 4. the result of each press is displayed below the notepad
